@@ -1,0 +1,12 @@
+.container {
+    align-items: 'center';
+    font-family: "Montserrat";
+    color: white;
+    background: url('../images/background.jpg') no-repeat;
+    overflow: hidden;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100vh;
+}
+
+
