@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Doughnut } from 'react-chartjs-2';
-import csv from './test.csv';
+import profiles from './test.csv';
 import './BarChart.css';
 
 export default class Charts extends Component {
@@ -15,7 +15,7 @@ export default class Charts extends Component {
     }
 
     getData = async() => {
-        const response = await fetch(csv);
+        const response = await fetch(profiles);
         const data = await response.text();
         const rows = data.split('\n');
         rows.forEach(row => {
@@ -25,8 +25,6 @@ export default class Charts extends Component {
               gender: [...prevState.gender, cols[2]]
           }))
         });
-        //console.log(this.state.gender);
-        //console.log(this.state.age);
     }
 
     countAge = () => {
@@ -35,21 +33,21 @@ export default class Charts extends Component {
         var forties  = 0;
         var fifties  = 0;
         var i = 0;
-        for (i; i < this.state.age.length; i++)
+        for(i; i < 50; i++)
         {
-            if (this.state.age[i] >= 20 && this.state.age < 30)
+            if (this.state.age[i] > 19 && this.state.age[i] < 30)
             {
                 twenties++;
             }
-            else if(this.state.age[i] >= 30 && this.state.age < 40)
+            else if(this.state.age[i] > 29 && this.state.age[i] < 40)
             {
                 thirties++;
             }
-            else if(this.state.age[i] >= 40 && this.state.age < 50)
+            else if(this.state.age[i] > 39 && this.state.age[i] < 50)
             {
                 forties++;
             }
-            else if(this.state.age[i] >= 50)
+            else if(this.state.age[i] > 49)
             {
                 fifties++;
             }
@@ -66,7 +64,7 @@ export default class Charts extends Component {
         var male = 0;
         var female = 0;
         var i = 0;
-        for (i; i < this.state.gender.length; i++)
+        for (i; i < 50; i++)
         {
             if (this.state.gender[i] === 'm')
             {
@@ -86,17 +84,15 @@ export default class Charts extends Component {
     render() {
         this.getData();
         const agedata = this.countAge();
-        //console.log(data);
         const genderdata = this.countGender();
         return (
             <div className="container">
-                <h1>BarChart</h1>
+                <h1>Age Distribution</h1>
                 <Bar
                     data={{
                         labels: ['20-29', '30-39', '40-49', '50+'],
                         datasets: [
                             {
-                                label: 'Age Distribution',
                                 data: [agedata[0], agedata[1], agedata[2], agedata[3]],
                                 backgroundColor: [
                                     'rgba(255, 255, 255, 0.7)',
@@ -111,16 +107,21 @@ export default class Charts extends Component {
                     height={200}
                     options={{
                         maintainAspectRatio: true,
+                        legend: {
+                            labels: {
+                                fontColor: 'white'
+                            }
+                        }
                     }} />
-                    <h1 style={{ marginTop: '100px' }}>Donut Chart</h1>
+                    <h1 style={{ marginTop: '100px' }}>Gender Distribution</h1>
                     <Doughnut
-                        style={{maxWidth: '600px', maxHeight: '600px', alignItems: 'center'}}
+                        style={{maxWidth: '600px', maxHeight: '600px', marginBottom: '100px', marginLeft: '600px'}}
                         data={{
                             labels: ['Male', 'Female'],
                             datasets: [
                                 {
                                     label: 'Gender Distribution',
-                                    data: [54, 36],
+                                    data: [genderdata[0], genderdata[1]],
                                     backgroundColor: [
                                         'rgba(121, 180, 255, 0.7)',
                                         'rgba(255, 99, 99, 0.7)',
@@ -128,8 +129,6 @@ export default class Charts extends Component {
                                 }
                             ]
                         }}
-                        width={100}
-                        height={100}
                         options={{
                             maintainAspectRatio: true,
                         }} />
@@ -138,6 +137,3 @@ export default class Charts extends Component {
     }
 
 }
-
-
-

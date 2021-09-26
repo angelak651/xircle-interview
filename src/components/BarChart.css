@@ -1,8 +1,9 @@
 .container {
     align-items: 'center';
+    justify-content: 'center';
     font-family: "Montserrat";
     color: white;
-    background: url('../images/background.jpg') no-repeat;
+    background-color: rgba(12, 40, 75, 0.87);
     overflow: hidden;
     background-size: cover;
     min-width: 100%;
